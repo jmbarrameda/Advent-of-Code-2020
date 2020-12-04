@@ -13,7 +13,6 @@
 
 */
 
-const { createPublicKey } = require('crypto');
 const fs = require('fs'); 
 
 const isBetween = (x, min, max) => {
@@ -50,14 +49,17 @@ const validator = (field) => (data) => {
       if(isBetween(n_data, 1920, 2002) && data.length === 4){
         return true;
       }
+      break;
     case "iyr":
       if(isBetween(n_data, 2010, 2020) && data.length === 4){
         return true;
       }
+      break;
     case "eyr":
       if(isBetween(n_data, 2020, 2030) && data.length === 4){
         return true;
       }
+      break;
     case "hgt":
       const hgt = Number(data.match(/\d+/g)[0])
       const unit = data.slice(-2);
@@ -70,21 +72,24 @@ const validator = (field) => (data) => {
           return true;
         }
       }
+      break;
     case "hcl":
       var re = /[0-9A-Fa-f]{6}/g;
-      
       if(re.test(data) && data[0] === '#') {
         return true;
       }
+      break;
     case "ecl":
       if(isValidEyeColor(data)){
         return true;
       }
+      break;
     case "pid":
       var re = /^\d{9}$/;
       if(re.test(data)){
         return true;
       }
+      break;
     case "cid":
       return true;
     default:
@@ -116,10 +121,9 @@ fs.readFile("./input.txt", (err,data) => {
 
         if(p_fields == parsed.length){
           return acc + 1;
-        }
+        } 
         return acc;
       }
-
       else{
         return acc;
       }
