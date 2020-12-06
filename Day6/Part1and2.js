@@ -17,9 +17,9 @@ const fs = require('fs');
 // returns an object with character count eg.( abcbcc => { a:1, b:2, c:3} )
 const letterCount = (input) => {
     var obj = {}
-    for(x = 0, length = input.length; x < length; x++) {
-        var l = input.charAt(x)
-        obj[l] = (isNaN(obj[l]) ? 1 : obj[l] + 1);
+    for(let i = 0; i < input.length; i++) {
+        letter = input[i]
+        obj[letter] = (isNaN(obj[letter]) ? 1 : obj[letter] + 1);
     }
     return obj;
 }
