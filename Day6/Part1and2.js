@@ -17,10 +17,8 @@ const fs = require('fs');
 // returns an object with character count eg.( abcbcc => { a:1, b:2, c:3} )
 const letterCount = (input) => {
     var obj = {}
-    var repeats=[];
-    var str = input;
-    for(x = 0, length = str.length; x < length; x++) {
-        var l = str.charAt(x)
+    for(x = 0, length = input.length; x < length; x++) {
+        var l = input.charAt(x)
         obj[l] = (isNaN(obj[l]) ? 1 : obj[l] + 1);
     }
     return obj;
