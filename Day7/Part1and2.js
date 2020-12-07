@@ -43,16 +43,17 @@ const parse = (input) => {
 }
 
 let master = {}
-const checkChildren = ( current, children, traversed = []) => {  
+const checkChildren = ( current, traversed = []) => {  
    if (traversed.includes(current) ){
      return;
    }
    traversed.push(current)
 
-   const grandchildren = children[current]
-   for(let i = 0; i < Object.keys(grandchildren).length; i++){     
-     child = Object.keys(grandchildren)[i]
-     checkChildren(child, children, traversed)
+   const current_children = master[current]
+   const children_names = Object.keys(current_children)
+   for(let i = 0; i < children_names.length; i++){     
+     child = children_names[i]
+     checkChildren(child, traversed)
    } 
    return traversed
 }
@@ -62,7 +63,7 @@ const checkBags = (current, prev_total = 1)=>{
   const current_children = master[current]
 
   let child_total = 0;
-  let children_names = Object.keys(current_children)
+  const children_names = Object.keys(current_children)
   for(let i = 0; i < children_names.length; i++){
       const child = children_names[i]
       const child_n = current_children[child]
@@ -71,7 +72,6 @@ const checkBags = (current, prev_total = 1)=>{
       checkBags(child, prev_total*child_n)
   }
   total += child_total
- 
   return total
 }
 
@@ -88,7 +88,7 @@ fs.readFile("./input.txt", (err,data) => {
     let sum = -1; // -1 kasi you need to minus shinygold 
     for(let i = 0; i < input.length; i++){
       const child = Object.keys(master)[i]
-      const traversed = checkChildren(child, master, [])
+      const traversed = checkChildren(child)
       if(traversed.includes(myBag)){
         sum += 1;
       }
