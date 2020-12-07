@@ -16,35 +16,30 @@ const fs = require('fs');
 
 // returns an object with character count eg.( abcbcc => { a:1, b:2, c:3} )
 const parse = (input) => {
-  let obj3 = {}
-  const Part1 = input.map(rule => {
+  let master = {}
+  input.forEach(rule => {
     const parse = rule.split(/contain/)
     parse[0] = parse[0].split(" ").join("")
-    parse[0] = parse[0].replace(/bags|bag/g, '').trim()
- 
-    var obj = {}
-    var re = /\d+/g;
+    const current = parse[0].replace(/bags|bag/g, '').trim()
+
+    let children = {}
+    const re = /\d+/g;
 
     if(re.test(parse[1])) {
-      const contained = parse[1].split(",");
-      for(let i = 0; i < contained.length; i++){
-        let value = Number(contained[i].match(re)[0])
-        contained[i] = contained[i].replace(re, '')
-        contained[i] = contained[i].split(" ").join("")
-        contained[i] = contained[i].replace(/bags|bag/g, '').trim()
+      const bags = parse[1].split(",");
+      for(let i = 0; i < bags.length; i++){
+        let value = Number(bags[i].match(re)[0])
+        bags[i] = bags[i].replace(re, '')
+        bags[i] = bags[i].split(" ").join("")
+        bags[i] = bags[i].replace(/bags|bag/g, '').trim()
       
-        var x = contained[i]
-        obj[x] =  value;
+        var child = bags[i]
+        children[child] =  value;
       }  
     }
-
-    let obj2 = {}
-    obj2[parse[0]] = obj
-    obj3[parse[0]] = obj
-    return obj2
+    master[current] = children
   })
-  return obj3;
-
+  return master;
 }
 
 let master = {}
@@ -105,6 +100,5 @@ fs.readFile("./input.txt", (err,data) => {
     const p2 = checkBags(myBag)
     console.log("Part2", p2)
     /* Day 7 : Part 2 ends here */
-    
   } 
 }) 
