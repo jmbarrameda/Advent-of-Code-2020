@@ -1,5 +1,5 @@
 /**
-  Day 8: 
+  Day 8: Handheld Halting
 
   Link: https://adventofcode.com/2020/day/8
 
@@ -44,7 +44,7 @@ fs.readFile("./input.txt", (err, data) => {
   } else {
     const input = data.toString().split("\n").flatMap(e => e.trim());
     const instructions = parse(input)
-    
+
     /* Day 7 : Part 1 starts here */
     const part1 = checkInstructions(instructions)
     console.log("Part1", part1)
